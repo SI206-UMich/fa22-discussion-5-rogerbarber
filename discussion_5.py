@@ -38,15 +38,30 @@ class Warehouse:
 
 	# Adds an item to the warehouse	
 	def add_item(self, item):
-		pass
+		self.items.append(item)
 
 	# Returns the item in the warehouse with the most stock		
 	def get_max_stock(self):
-		pass
+		maxi = 0
+		maxitem = None
+		for a in self.items:
+			if a.stock > maxi:
+				maxi = a.stock
+				maxitem = a
+		return maxitem
+
+
 	
 	# Returns the item in the warehouse with the highest price
 	def get_max_price(self):
-		pass	
+		maxi = 0
+		maxitem = None
+		for a in self.items:
+			if a.price > maxi:
+				maxi = a.price
+				maxitem = a
+		return maxitem
+
 
 
 
@@ -75,18 +90,29 @@ class TestAllMethods(unittest.TestCase):
 
 	## Check to see whether you can add an item to the warehouse
 	def test_add_item(self):
-		pass
+		wh1 = Warehouse()
+		self.assertEqual(len(wh1.items), 0, "Testing that string begins empty (len of 0)")
+		wh1.add_item(self.item1)
+		self.assertEqual(len(wh1.items), 1, "Testing that add_item works for expected len 1")
+
 
 
 	## Check to see whether warehouse correctly returns the item with the most stock
 	def test_warehouse_max_stocks(self):
-		pass
+		wh2 = Warehouse([self.item1, self.item2, self.item3])
+		wh3 = Warehouse()
+		self.assertEqual(wh2.get_max_stock().name, "Water", "Testing that maximum item returns a name of 'Water'")
+		self.assertEqual(wh3.get_max_stock(), None, "Determining if an empty items list returns None")
+		self.assertEqual(wh2.get_max_stock().stock, 100, "Checking if max item name and max stock quantity match")
 
 
 	# Check to see whether the warehouse correctly return the item with the highest price
 	def test_warehouse_max_price(self):
-		pass
-		
+		wh4 = Warehouse([self.item1, self.item2, self.item3])
+		wh5 = Warehouse()
+		self.assertEqual(wh4.get_max_price().name, "Beer", "Testing that max priced item matches name 'Beer'")
+		self.assertEqual(wh5.get_max_price(), None, "Testing that empty items list returns None (as there is no max price)")
+		self.assertEqual(wh4.get_max_price().price, 6, "Checking that highest priced item, Beer, has expected price of 6")
 
 def main():
 	unittest.main()
